@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {ShopFormModule} from "./shop-form/shop-form.module";
 
 @NgModule({
   declarations: [

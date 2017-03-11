@@ -4,7 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    children: []
+    children: [
+      {
+        path:'shop',
+        loadChildren:'app/shop-form/shop-form.module#ShopFormModule'
+      }
+    ]
   }
 ];
 
