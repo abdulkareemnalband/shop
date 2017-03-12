@@ -1,5 +1,9 @@
 shop-insert-shop-form{
   md-input-container.full-width{
     width: 100%;
+    .validator{
+      color:red;
+      font-size: smaller;
+    }
   }
 }

@@ -1,14 +1,37 @@
 <div>
-  <form [formGroup]="formData.form">
+  <form [formGroup]="itemType" fxLayout="row" (ngSubmit)="loadForm()">
+    <md-input-container>
+      <input mdInput  [mdAutocomplete]="autocompleteTemplateRefId"
+             formControlName="item" >
+      <span mdPrefix>Item :</span>
+    </md-input-container>
+
+    <md-autocomplete #autocompleteTemplateRefId>
+      <md-option *ngFor="let choice of filteredOptions | async" [value]="choice">
+        {{choice}}
+      </md-option>
+    </md-autocomplete>
+    <button md-raised-button type="submit" color="primary">Load Form</button>
+  </form>
+  <md-divider></md-divider>
+  <form *ngIf="formData" [formGroup]="formData.form" (ngSubmit)="onSubmit()">
     <div fxLayout="column">
       <md-list dense>
         <md-list-item *ngFor="let field of formData.format">
-          <md-input-container floatPlaceholder="never" fxLayout="row" class="full-width">
+          <md-input-container floatPlaceholder="never" fxLayout="row" class="full-width" *ngIf="field.type !== 'bool'">
             <span md-prefix>{{field.caption}} :</span>
-            <input mdInput type="text" required [formControlName]="field.caption"
+            <input mdInput [type]="field.type" [formControlName]="field.caption"
                    [placeholder]="field.defaultValue">
+            <span md-suffix class="validator" [hidden]="!isValid(field.caption)">{{field.validationMessage}}</span>
           </md-input-container>
+          <div></div>
+          <md-checkbox *ngIf="field.type === 'bool'"
+                       labelPosition="before"
+                       [formControlName]="field.caption">
+            {{field.caption}} :
+          </md-checkbox>
         </md-list-item>
+        <button md-raised-button type="submit" color="primary">Submit</button>
       </md-list>
 
     </div>

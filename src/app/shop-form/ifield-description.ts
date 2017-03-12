@@ -2,6 +2,6 @@ export interface IFieldDescription {
   caption: string;
   type: string;
   mandatory: boolean;
-  defaultValue: string;
+  defaultValue: any;
   validationMessage: string;
 }

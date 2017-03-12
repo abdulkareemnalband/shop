@@ -1,10 +1,11 @@
 import {Injectable, ClassProvider} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Http} from '@angular/http';
 import {IFieldDescription} from './ifield-description';
-import {formatData} from '../../sampledata';
+import {getFormData} from '../../sampledata';
 import {forEach} from "@angular/router/src/utils/collection";
 import {IFormData} from "./iform-data";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class ShopFormBuilderService {
@@ -12,19 +13,46 @@ export class ShopFormBuilderService {
   constructor(private _fb: FormBuilder, private http: Http) {
   }
 
-  public getForm(itemCode: string): IFormData {
-    let sampleData:IFieldDescription[] = formatData;
-    console.log(sampleData);
-    let fg:any ={};
-    for(let field of sampleData){
-      fg[field.caption] = []
-    }
-    let form:FormGroup = this._fb.group(fg);
-    return {
-      format:sampleData,
-      form:form
-    };
+  public getForm(itemCode: string): Observable<IFormData> {
+    return getFormData(itemCode).map( (data) => this.buildForm(data))
+  }
 
+  private buildForm(formatData: IFieldDescription[]) {
+
+    function mapTypes(format: IFieldDescription): IFieldDescription {
+      let field: IFieldDescription = Object.assign({}, format);
+      if(field.type === 'int'){
+        field.type = 'number';
+      }
+      if(field.type === 'bool'){
+        if(!field.defaultValue || field.defaultValue === ''
+          || field.defaultValue.toLowerCase() === 'false'){
+          field.defaultValue = false;
+        }
+        else {
+          field.defaultValue = true;
+        }
+      }
+      return field;
+    }
+    let _formatData:IFieldDescription[] = formatData.map(mapTypes);
+    let fg: any = {};
+    for (let field of _formatData) {
+      let validator: any[] = [];
+      let defalutV: any = '';
+      if (field.mandatory) {
+        validator = [Validators.required]
+      }
+      if (field.type === 'bool') {
+        defalutV = field.defaultValue
+      }
+      fg[field.caption] = [defalutV, validator]
+    }
+    let form: FormGroup = this._fb.group(fg);
+    return {
+      format: _formatData,
+      form: form
+    };
   }
 }
 

@@ -7,6 +7,7 @@ import {MaterialModule} from '@angular/material';
 import { InsertShopFormComponent } from './shop-form/insert-shop-form/insert-shop-form.component';
 import { ViewShopFormComponent } from './shop-form/view-shop-form/view-shop-form.component';
 import {ShopFormRoutingModule} from './shop-form.router';
+import { SuccessDialogComponent } from './shop-form/insert-shop-form/success-dialog/success-dialog.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {ShopFormRoutingModule} from './shop-form.router';
     MaterialModule,
     ShopFormRoutingModule
   ],
-  declarations: [ShopFormComponent, InsertShopFormComponent, ViewShopFormComponent],
-  providers:[SHOPFORMBUILDERSERVICE_PROVIDER]
+  declarations: [ShopFormComponent, InsertShopFormComponent, ViewShopFormComponent, SuccessDialogComponent],
+  providers:[SHOPFORMBUILDERSERVICE_PROVIDER],
+  entryComponents:[SuccessDialogComponent]
 })
 export class ShopFormModule { }

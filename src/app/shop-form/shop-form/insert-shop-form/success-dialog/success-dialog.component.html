@@ -1,0 +1,12 @@
+<h1 md-dialog-title>Saved Item Details</h1>
+
+<md-dialog-content>
+  <div class="layout-row" *ngFor="let item of data">
+    <div class="flex33">{{item.name}}</div>
+    <div class="flex66">{{item.value}}</div>
+  </div>
+</md-dialog-content>
+
+<md-dialog-actions [attr.align]="start">
+  <button md-button md-dialog-close>Close</button>
+</md-dialog-actions>
