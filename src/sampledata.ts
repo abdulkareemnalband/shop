@@ -1,6 +1,8 @@
-import {IFieldDescription} from './app/shop-form';
+import {IFieldDescription} from "./app/shop-form";
 import {Observable, BehaviorSubject} from "rxjs";
-const tv:IFieldDescription[] = [
+import {ISearchResult} from "./app/shop-form/isearch-result";
+import {items} from "./sampleitems";
+const tv: IFieldDescription[] = [
   {
     "caption": "Name",
     "type": "text",
@@ -38,7 +40,7 @@ const tv:IFieldDescription[] = [
   }
 ];
 
-const phone:IFieldDescription[] = [
+const phone: IFieldDescription[] = [
   {
     "caption": "Name",
     "type": "text",
@@ -76,7 +78,7 @@ const phone:IFieldDescription[] = [
   }
 ];
 
-const radio:IFieldDescription[] = [
+const radio: IFieldDescription[] = [
   {
     "caption": "Name",
     "type": "text",
@@ -107,17 +109,38 @@ const radio:IFieldDescription[] = [
   },
 ];
 
-export function getFormData(item:string):Observable<IFieldDescription[]>{
-  let data:IFieldDescription[];
-  if(item==='tv'){
+function string2type (item: string):IFieldDescription[] {
+  let data: IFieldDescription[];
+  if (item === 'tv') {
     data = tv;
   }
-  if(item === 'radio'){
+  if (item === 'radio') {
     data = radio;
   }
-  if(item === 'phone'){
+  if (item === 'phone') {
     data = phone;
   }
-  let subject:BehaviorSubject<IFieldDescription[]> = new BehaviorSubject<IFieldDescription[]>(data);
+  return data;
+};
+export function getFormData(item: string): Observable<IFieldDescription[]> {
+  let data = string2type(item);
+  let subject: BehaviorSubject<IFieldDescription[]> = new BehaviorSubject<IFieldDescription[]>(data);
   return subject.asObservable();
+}
+
+export function search(word: string): Observable<ISearchResult[]> {
+  let x = items.filter(option => {
+    let r = new RegExp(`^${word}`, 'gi');
+    return r.test(option.type) || r.test(option.Name);
+  }).map((v) => { return {id:v.id,Name:v.Name,type:v.type}});
+  let result: BehaviorSubject<ISearchResult[]> = new BehaviorSubject(x)
+  return result.asObservable();
+}
+
+export function retriveData(id:number):Observable<any[]>{
+  let item:any = items.find((i)=> i.id === id);
+  let type = string2type(item.type);
+  let result:Array<any> = type.map((t)=>{return{key:t.caption,value:item[t.caption]}});
+  let subt: BehaviorSubject<ISearchResult[]> = new BehaviorSubject(result);
+  return subt.asObservable();
 }

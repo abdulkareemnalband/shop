@@ -8,11 +8,13 @@ import { InsertShopFormComponent } from './shop-form/insert-shop-form/insert-sho
 import { ViewShopFormComponent } from './shop-form/view-shop-form/view-shop-form.component';
 import {ShopFormRoutingModule} from './shop-form.router';
 import { SuccessDialogComponent } from './shop-form/insert-shop-form/success-dialog/success-dialog.component';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     MaterialModule,
     ShopFormRoutingModule

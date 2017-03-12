@@ -2,10 +2,11 @@ import {Injectable, ClassProvider} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Http} from '@angular/http';
 import {IFieldDescription} from './ifield-description';
-import {getFormData} from '../../sampledata';
+import {getFormData, search, retriveData} from '../../sampledata';
 import {forEach} from "@angular/router/src/utils/collection";
 import {IFormData} from "./iform-data";
 import {Observable} from "rxjs";
+import {ISearchResult} from "./isearch-result";
 
 @Injectable()
 export class ShopFormBuilderService {
@@ -54,6 +55,15 @@ export class ShopFormBuilderService {
       form: form
     };
   }
+
+  public searchItems(word:string):Observable<ISearchResult[]>{
+    return search(word);
+  }
+
+  public retrive(id:number):Observable<any[]>{
+    return retriveData(id);
+  }
+
 }
 
 

@@ -1,3 +1,22 @@
-<p>
-  view-shop-form works!
-</p>
+<form [formGroup]="form" (ngSubmit)="searchSubmit()">
+  <md-input-container floatPlaceholder="never">
+    <span md-prefix>Search term :</span>
+    <input mdInput  [mdAutocomplete]="autocompleteTemplateRefId"
+           formControlName="searchTerm" name="formControlName">
+  </md-input-container>
+
+  <md-autocomplete #autocompleteTemplateRefId="mdAutocomplete" [displayWith]="displayFn">
+    <md-option *ngFor="let choice of searchedItems | async" [value]="choice">
+      <span>{{ choice.Name }}</span>
+      <span class="secondary-text"> ({{choice.type}}) </span>
+    </md-option>
+  </md-autocomplete>
+  <button md-raised-button type="submit" color="primary">Search</button>
+</form>
+
+<div fxLayout="column" *ngIf="result">
+  <div fxLayout="row" *ngFor="let item of result" fxLayoutAlign="right">
+    <div fxFlex>{{item.key}} :</div>
+    <div fxFlex>{{item.value}}</div>
+  </div>
+</div>
