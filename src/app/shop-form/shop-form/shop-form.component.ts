@@ -8,12 +8,11 @@ import {ShopFormBuilderService} from "../shop-form-builder.service";
 })
 export class ShopFormComponent implements OnInit {
 
-  constructor(private _fb:ShopFormBuilderService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   onSelect():void{
-    this._fb.getForm('');
   }
 }

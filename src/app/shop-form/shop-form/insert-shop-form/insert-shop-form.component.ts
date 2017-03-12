@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup} from "@angular/forms";
+import {ShopFormBuilderService} from "../../shop-form-builder.service";
+import {IFormData} from "../../iform-data";
 
 @Component({
   selector: 'shop-insert-shop-form',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InsertShopFormComponent implements OnInit {
 
-  constructor() { }
+  public formData:IFormData= null;
+  constructor(private _fb:ShopFormBuilderService) { }
 
   ngOnInit() {
+    this.formData = this._fb.getForm('');
   }
 
 }

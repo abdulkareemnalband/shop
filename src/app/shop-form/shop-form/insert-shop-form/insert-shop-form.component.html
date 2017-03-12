@@ -1,3 +1,16 @@
-<p>
-  insert-shop-form works!
-</p>
+<div>
+  <form [formGroup]="formData.form">
+    <div fxLayout="column">
+      <md-list dense>
+        <md-list-item *ngFor="let field of formData.format">
+          <md-input-container floatPlaceholder="never" fxLayout="row" class="full-width">
+            <span md-prefix>{{field.caption}} :</span>
+            <input mdInput type="text" required [formControlName]="field.caption"
+                   [placeholder]="field.defaultValue">
+          </md-input-container>
+        </md-list-item>
+      </md-list>
+
+    </div>
+  </form>
+</div>
