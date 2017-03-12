@@ -1,4 +1,5 @@
-[
+import {IFieldDescription} from './app/shop-form';
+export const formatData:IFieldDescription[] = [
   {
     "caption": "Name",
     "type": "text",

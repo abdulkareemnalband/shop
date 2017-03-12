@@ -5,16 +5,21 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {ShopFormModule} from "./shop-form/shop-form.module";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import { HomePageComponent } from './home-page/home-page.component';
+import {MaterialModule} from '@angular/material';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    MaterialModule,
+    FlexLayoutModule,
     AppRoutingModule
   ],
   providers: [],
